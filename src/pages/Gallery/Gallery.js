@@ -1,18 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import './Gallery.scss';
 
-const Gallery = () => {
+const Gallery = ({ searchValue }) => {
+	const [photos, setPhotos] = useState();
+
+	const apiUrl = `https://api.unsplash.com/search/photos?per_page=30&query=${searchValue}&orientation=squarish`;
+	const _apiKey = 'IiHTjYC5n1BhVTDfhpUAo-m5H1qPHy4CXT-WfrMDO4A';
+	useEffect(() => {
+		fetch(apiUrl, {
+			method: 'GET',
+			headers: {
+				Authorization: `Client-ID ${_apiKey}`,
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				setPhotos(data.results);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}, [apiUrl]);
+
 	return (
-		<div>
-			{/* {search ? (
-				<h3>
-					The <code>search</code> in the query string is &quot;
-					{search}
-					&quot;
-				</h3>
-			) : (
-				<h3>There is no search in the query string</h3>
-			)} */}
-			<h1>HELLO!</h1>
+		<div className="gallery">
+			{photos &&
+				photos.map((item) => (
+					<div key={item.id} className="photo">
+						<img src={item.urls.regular} alt="me" />
+					</div>
+				))}
 		</div>
 	);
 };

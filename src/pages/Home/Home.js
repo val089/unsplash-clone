@@ -2,10 +2,10 @@ import React from 'react';
 import './Home.scss';
 import Autocomplete from '../../components/Autocomplete';
 
-const Home = () => {
+const Home = ({ searchPhotoValue }) => {
 	return (
 		<header className="home">
-			<Autocomplete />
+			<Autocomplete searchPhotoValue={searchPhotoValue} />
 		</header>
 	);
 };
