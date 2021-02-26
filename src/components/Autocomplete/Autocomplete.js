@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import './Autocomplete.scss';
 import SearchBox from '../SearchBox';
+import Option from './components/Option';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	useHistory,
+} from 'react-router-dom';
 
 const Autocomplete = () => {
 	const [activeOption, setActiveOption] = useState(0);
 	const [filteredOptions, setFilteredOptions] = useState([]);
-	const [showOptions, setShowOptions] = useState(false);
-	const [inputValue, setInputValue] = useState('');
-	const [options, setOptions] = useState(['car', 'bmw', 'ford']);
+	const [search, setSearch] = useState('');
+	const [options, setOptions] = useState([]);
+
+	const history = useHistory();
+
+	const routeChange = (search) => {
+		let path = search;
+		history.push(path);
+	};
 
 	const filterData = (data) => {
 		let preData = data.filter(
@@ -20,9 +33,8 @@ const Autocomplete = () => {
 		return [...set];
 	};
 
-	const apiUrl = `https://api.unsplash.com/search/photos?per_page=30&query=${inputValue}`;
-	const _apiKey = 'xxx';
-
+	const apiUrl = `https://api.unsplash.com/search/photos?per_page=30&query=${search}`;
+	const _apiKey = 'IiHTjYC5n1BhVTDfhpUAo-m5H1qPHy4CXT-WfrMDO4A';
 	useEffect(() => {
 		fetch(apiUrl, {
 			method: 'GET',
@@ -32,38 +44,48 @@ const Autocomplete = () => {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(filterData(data.results));
 				setOptions(filterData(data.results));
 			})
 			.catch((error) => {
 				console.error(error);
 			});
-	}, [inputValue, apiUrl]);
+	}, [apiUrl]);
+
+	useEffect(() => {
+		if (search.length > 2) {
+			setFilteredOptions(
+				options.filter((option) =>
+					option.toLowerCase().includes(search.toLocaleLowerCase())
+				)
+			);
+		}
+	}, [options, search]);
 
 	const onChange = (event) => {
 		const inputValue = event.target.value;
-
-		const filteredOptions = options.filter(
-			(option) =>
-				option.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
-		);
 		console.log(filteredOptions);
-		setFilteredOptions(filteredOptions);
-		setShowOptions(true);
-		setInputValue(inputValue);
+		setSearch(inputValue);
 	};
 
 	const onClick = (event) => {
-		setShowOptions(false);
-		setInputValue(event.currentTarget.innerText);
+		setSearch(event.currentTarget.innerText);
+		routeChange(event.currentTarget.innerText);
+	};
+
+	const onSubmit = () => {
+		routeChange(filteredOptions[activeOption]);
 	};
 
 	const onKeyDown = (event) => {
 		if (event.keyCode === 13) {
-			setShowOptions(false);
-			setInputValue(filteredOptions[activeOption]);
+			event.preventDefault();
+			if (filteredOptions.length) {
+				setSearch(filteredOptions[activeOption]);
+				onSubmit(filteredOptions[activeOption]);
+			}
 		} else if (event.keyCode === 38) {
 			if (activeOption === 0) {
+				console.log(activeOption);
 				return;
 			}
 			setActiveOption(activeOption - 1);
@@ -77,7 +99,7 @@ const Autocomplete = () => {
 	};
 
 	let optionList;
-	if (showOptions && inputValue.length > 2) {
+	if (search.length > 2) {
 		if (filteredOptions.length) {
 			optionList = (
 				<ul className="options">
@@ -87,23 +109,18 @@ const Autocomplete = () => {
 							className = 'option-active';
 						}
 						return (
-							<li
-								className={className}
+							<Option
+								onClick={onClick}
 								key={option}
-								// onClick={onClick}
-							>
-								{option}
-							</li>
+								className={className}
+								option={option}
+							/>
 						);
 					})}
 				</ul>
 			);
 		} else {
-			optionList = (
-				<div className="no-options">
-					<em>No Option!</em>
-				</div>
-			);
+			optionList = <p className="no-options">No Option!</p>;
 		}
 	}
 
@@ -113,8 +130,9 @@ const Autocomplete = () => {
 				<label className="form__label" htmlFor="search"></label>
 				<SearchBox
 					onChange={onChange}
-					value={inputValue}
-					// onKeyDown={onKeyDown}
+					value={search}
+					onKeyDown={onKeyDown}
+					onSubmit={onSubmit}
 				/>
 				{optionList}
 			</div>
