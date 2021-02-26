@@ -2,14 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './Autocomplete.scss';
 import SearchBox from '../SearchBox';
 import Option from './components/Option';
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	useHistory,
-} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const Autocomplete = () => {
+const Autocomplete = ({ searchPhotoValue }) => {
 	const [activeOption, setActiveOption] = useState(0);
 	const [filteredOptions, setFilteredOptions] = useState([]);
 	const [search, setSearch] = useState('');
@@ -17,8 +12,8 @@ const Autocomplete = () => {
 
 	const history = useHistory();
 
-	const routeChange = (search) => {
-		let path = search;
+	const routeChange = () => {
+		let path = '/gallery';
 		history.push(path);
 	};
 
@@ -72,8 +67,9 @@ const Autocomplete = () => {
 		routeChange(event.currentTarget.innerText);
 	};
 
-	const onSubmit = () => {
-		routeChange(filteredOptions[activeOption]);
+	const onSubmit = (value) => {
+		routeChange();
+		searchPhotoValue(value);
 	};
 
 	const onKeyDown = (event) => {
