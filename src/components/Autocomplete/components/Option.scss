@@ -1,0 +1,22 @@
+ul.options li {
+	display: block;
+	background: white;
+	padding: 10px;
+	font-size: 1.2rem;
+	width: 100%;
+}
+ul.options li:hover {
+	font-weight: bold;
+	color: #00b4cc;
+	cursor: pointer;
+	transition: 0.3s all;
+}
+
+ul.options li.option-active {
+	background: whitesmoke;
+	font-size: 1.5rem;
+	color: #00b4cc;
+}
+.no-options {
+	color: white;
+}

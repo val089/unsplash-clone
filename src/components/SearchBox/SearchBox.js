@@ -1,5 +1,5 @@
 import React from 'react';
-import './SearchBox';
+import './SearchBox.scss';
 
 const SearchBox = ({ onChange, value, onKeyDown }) => {
 	return (
@@ -11,6 +11,7 @@ const SearchBox = ({ onChange, value, onKeyDown }) => {
 			value={value}
 			onKeyDown={onKeyDown}
 			autoComplete="off"
+			placeholder="Search Photos"
 		/>
 	);
 };
