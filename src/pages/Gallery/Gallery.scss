@@ -1,12 +1,15 @@
-.gallery {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-wrap: wrap;
-}
+@import 'mixins.scss';
+@import 'breakpoints.scss';
 
-.photo {
-	width: 300px;
+.gallery {
+	@include wrapper;
+	margin: 0 auto;
 	padding: 1rem;
+	column-count: 1;
+	@include mq(smartphone) {
+		column-count: 2;
+	}
+	@include mq(smartphone-large) {
+		column-count: 3;
+	}
 }
