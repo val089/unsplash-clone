@@ -1,5 +1,19 @@
 .photo {
 	margin-bottom: 1rem;
 	&__img {
+		cursor: zoom-in;
+	}
+
+	&__modal {
+		&-author,
+		&-location {
+			padding: 2rem 0;
+			font-size: 1.6rem;
+			font-weight: 600;
+		}
+
+		&-img {
+			width: 50rem;
+		}
 	}
 }
