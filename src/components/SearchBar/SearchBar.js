@@ -61,6 +61,7 @@ const SearchBar = ({ searchPhotoValue }) => {
 
 	const onSubmit = (value) => {
 		searchPhotoValue(value);
+		setSearch('');
 	};
 
 	const onKeyDown = (event) => {

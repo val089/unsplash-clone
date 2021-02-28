@@ -10,6 +10,8 @@ const GalleryResults = ({ data }) => {
 					key={photo.id}
 					img={photo.urls.regular}
 					alt={photo.alt_description}
+					author={photo.user.name}
+					location={photo.user.location}
 				/>
 			))}
 		</section>
