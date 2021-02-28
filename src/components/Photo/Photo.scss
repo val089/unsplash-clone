@@ -5,15 +5,28 @@
 	}
 
 	&__modal {
+		&-header {
+			padding: 2rem 0;
+			display: flex;
+			justify-content: space-between;
+		}
+
 		&-author,
 		&-location {
-			padding: 2rem 0;
 			font-size: 1.6rem;
 			font-weight: 600;
 		}
 
+		&-location {
+			padding: 1rem 0;
+		}
+
 		&-img {
 			width: 50rem;
+		}
+
+		&-btn {
+			outline: none;
 		}
 	}
 }

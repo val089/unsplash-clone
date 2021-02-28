@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Autocomplete.scss';
-import SearchBox from '../SearchBox';
+import Input from '../Input';
 import Option from '../Option';
 import { useHistory } from 'react-router-dom';
+import { apiUrl, _apiKey } from '../../constants';
 
 const Autocomplete = ({ searchPhotoValue }) => {
 	const [activeOption, setActiveOption] = useState(0);
@@ -28,10 +29,8 @@ const Autocomplete = ({ searchPhotoValue }) => {
 		return [...set];
 	};
 
-	const apiUrl = `https://api.unsplash.com/search/photos?per_page=30&query=${search}`;
-	const _apiKey = 'IiHTjYC5n1BhVTDfhpUAo-m5H1qPHy4CXT-WfrMDO4A';
 	useEffect(() => {
-		fetch(apiUrl, {
+		fetch(apiUrl + search, {
 			method: 'GET',
 			headers: {
 				Authorization: `Client-ID ${_apiKey}`,
@@ -40,11 +39,12 @@ const Autocomplete = ({ searchPhotoValue }) => {
 			.then((response) => response.json())
 			.then((data) => {
 				setOptions(filterData(data.results));
+				console.log(filterData(data.results));
 			})
 			.catch((error) => {
 				console.error(error);
 			});
-	}, [apiUrl]);
+	}, [search]);
 
 	useEffect(() => {
 		if (search.length > 2) {
@@ -121,7 +121,7 @@ const Autocomplete = ({ searchPhotoValue }) => {
 		<form className="form">
 			<div className="form__group">
 				<label className="form__label" htmlFor="search"></label>
-				<SearchBox
+				<Input
 					onChange={onChange}
 					value={search}
 					onKeyDown={onKeyDown}

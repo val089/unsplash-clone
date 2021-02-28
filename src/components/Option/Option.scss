@@ -1,20 +1,33 @@
-ul.options li {
+.options li {
 	display: block;
 	padding: 10px;
 	font-size: 1.2rem;
 	width: 100%;
-}
-ul.options li:hover {
-	font-weight: bold;
-	color: #00b4cc;
-	cursor: pointer;
-	transition: 0.3s all;
+
+	&:hover {
+		font-weight: bold;
+		color: #00b4cc;
+		cursor: pointer;
+		transition: 0.3s all;
+	}
+	&.option-active {
+		font-size: 1.5rem;
+		color: #00b4cc;
+	}
+
+	&__loading,
+	&__error {
+		padding: 1rem;
+		font-size: 1.6rem;
+	}
+
+	&__error {
+		color: red;
+	}
 }
 
-ul.options li.option-active {
-	font-size: 1.5rem;
-	color: #00b4cc;
-}
 .no-options {
-	color: white;
+	background: #fff;
+	font-size: 1.6rem;
+	padding: 1rem;
 }

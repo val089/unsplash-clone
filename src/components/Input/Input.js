@@ -1,7 +1,7 @@
 import React from 'react';
-import './SearchBox.scss';
+import './Input.scss';
 
-const SearchBox = ({ onChange, value, onKeyDown }) => {
+const Input = ({ onChange, value, onKeyDown }) => {
 	return (
 		<input
 			type="text"
@@ -16,4 +16,4 @@ const SearchBox = ({ onChange, value, onKeyDown }) => {
 	);
 };
 
-export default SearchBox;
+export default Input;
