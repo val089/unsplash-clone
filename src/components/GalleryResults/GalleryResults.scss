@@ -1,0 +1,14 @@
+@import 'mixins.scss';
+@import 'breakpoints.scss';
+
+.gallery-results {
+	margin: 0 auto;
+	padding: 1rem;
+	column-count: 1;
+	@include mq(smartphone) {
+		column-count: 2;
+	}
+	@include mq(smartphone-large) {
+		column-count: 3;
+	}
+}

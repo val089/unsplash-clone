@@ -1,15 +1,37 @@
+@import 'colors.scss';
 @import 'mixins.scss';
-@import 'breakpoints.scss';
 
 .gallery {
-	@include wrapper;
 	margin: 0 auto;
-	padding: 1rem;
-	column-count: 1;
-	@include mq(smartphone) {
-		column-count: 2;
+	@include wrapper;
+
+	&__search {
+		position: relative;
+		width: 100%;
 	}
-	@include mq(smartphone-large) {
-		column-count: 3;
+
+	&__title {
+		font-size: 4.6rem;
+		font-weight: 600;
+		padding: 4rem 0;
+	}
+}
+
+.back-link {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 3rem;
+	width: 12rem;
+	height: 12rem;
+	background: $back-link-bg-color;
+	border-radius: 50%;
+
+	&--display {
+		display: flex;
 	}
 }

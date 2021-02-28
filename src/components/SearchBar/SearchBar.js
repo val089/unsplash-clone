@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './Autocomplete.scss';
+import '../../components/Autocomplete/Autocomplete.scss';
 import SearchBox from '../SearchBox';
 import Option from '../Option';
-import { useHistory } from 'react-router-dom';
+import './SearchBar.scss';
 
-const Autocomplete = ({ searchPhotoValue }) => {
+const SearchBar = ({ searchPhotoValue }) => {
 	const [activeOption, setActiveOption] = useState(0);
 	const [filteredOptions, setFilteredOptions] = useState([]);
 	const [search, setSearch] = useState('');
 	const [options, setOptions] = useState([]);
-
-	const history = useHistory();
-
-	const routeChange = () => {
-		let path = '/gallery';
-		history.push(path);
-	};
 
 	const filterData = (data) => {
 		let preData = data.filter(
@@ -63,11 +56,10 @@ const Autocomplete = ({ searchPhotoValue }) => {
 
 	const onClick = (event) => {
 		setSearch(event.currentTarget.innerText);
-		routeChange(event.currentTarget.innerText);
+		searchPhotoValue(event.currentTarget.innerText);
 	};
 
 	const onSubmit = (value) => {
-		routeChange();
 		searchPhotoValue(value);
 	};
 
@@ -133,4 +125,4 @@ const Autocomplete = ({ searchPhotoValue }) => {
 	);
 };
 
-export default Autocomplete;
+export default SearchBar;
