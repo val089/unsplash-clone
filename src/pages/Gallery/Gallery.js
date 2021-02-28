@@ -1,18 +1,18 @@
-// import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './Gallery.scss';
 import { Link } from 'react-router-dom';
-import SearchBar from '../../components/SearchBar';
+import SearchBarGallery from '../../components/SearchBarGallery';
 import GalleryResults from '../../components/GalleryResults';
+import { apiUrl, _apiKey } from '../../constants';
 
 const Gallery = ({ searchValue }) => {
 	const [photos, setPhotos] = useState([]);
 	const [value, setValue] = useState('');
+	const [isLoading, setLoading] = useState(true);
+	const [hasError, setError] = useState(false);
 
-	const apiUrl = `https://api.unsplash.com/search/photos?per_page=30&query=${value}`;
-	const _apiKey = 'IiHTjYC5n1BhVTDfhpUAo-m5H1qPHy4CXT-WfrMDO4A';
 	useEffect(() => {
-		fetch(apiUrl, {
+		fetch(apiUrl + value, {
 			method: 'GET',
 			headers: {
 				Authorization: `Client-ID ${_apiKey}`,
@@ -21,11 +21,12 @@ const Gallery = ({ searchValue }) => {
 			.then((response) => response.json())
 			.then((data) => {
 				setPhotos(data.results);
+				setLoading(false);
 			})
 			.catch((error) => {
-				console.error(error);
+				setError(true);
 			});
-	}, [apiUrl]);
+	}, [value]);
 
 	useEffect(() => {
 		setValue(searchValue);
@@ -39,9 +40,13 @@ const Gallery = ({ searchValue }) => {
 		return (
 			<section className="gallery">
 				<header className="gallery__search">
-					<SearchBar searchPhotoValue={searchPhotoValue} />
+					<SearchBarGallery searchPhotoValue={searchPhotoValue} />
 				</header>
 				<h1 className="gallery__title">{value || searchValue}</h1>
+				{isLoading && <p className="gallery__loading">Loading...</p>}
+				{hasError && (
+					<p className="gallery__error">An error has occurred</p>
+				)}
 				<GalleryResults data={photos} />
 			</section>
 		);

@@ -10,6 +10,10 @@ const Photo = ({ img, alt, author, location }) => {
 		setModalActive(true);
 	};
 
+	const closeModal = () => {
+		setModalActive(false);
+	};
+
 	return (
 		<div className="photo">
 			<img
@@ -20,7 +24,12 @@ const Photo = ({ img, alt, author, location }) => {
 			/>
 
 			<Modal active={modalActive} setActive={setModalActive}>
-				<h1 className="photo__modal-author">Author: {author}</h1>
+				<header className="photo__modal-header">
+					<h1 className="photo__modal-author">Author: {author}</h1>
+					<button className="photo__modal-btn" onClick={closeModal}>
+						CLOSE
+					</button>
+				</header>
 				<img className="photo__modal-img" src={img} alt={alt}></img>
 				<p className="photo__modal-location">
 					Location:{' '}
